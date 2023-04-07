@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 
 function App(props) {
   const [text, setText] = useState("");
-  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [timeRemaining, setTimeRemaining] = useState(15);
+  const [isTimeRunning, setIsTimeRunning] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
 
   function handleChange(e) {
     const { value } = e.target;
     setText(value);
+    if (isTimeRunning && timeRemaining >= 0) setWordCount(calculateWordCount());
   }
-  function calculateWordCount(text) {
+  function calculateWordCount() {
     const wordsArrray = text.trim().split(" ");
     const filteredWord = wordsArrray.filter((word) => word !== "");
     console.log(filteredWord.length);
@@ -20,12 +23,15 @@ function App(props) {
       setTimeRemaining((time) => time - 1);
     }, 1000);
     if (timeRemaining == 0) clearTimeout(id); */
-    if (timeRemaining > 0) {
+    if (isTimeRunning && timeRemaining > 0) {
       setTimeout(() => {
         setTimeRemaining((time) => time - 1);
       }, 1000);
+    } else if (timeRemaining === 0) {
+      setIsTimeRunning(false);
+      setTimeRemaining(15);
     }
-  }, [timeRemaining]);
+  }, [timeRemaining, isTimeRunning]);
 
   return (
     <div>
@@ -33,8 +39,8 @@ function App(props) {
       {/**react normalizes the text area as input tag so self cosing tag */}
       <textarea onChange={handleChange} value={text} />
       <h4>Time remaining: {timeRemaining}</h4>
-      <button onClick={() => calculateWordCount(text)}>Start</button>
-      <h1>Word count: {0}</h1>
+      <button onClick={() => setIsTimeRunning(true)}>Start</button>
+      <h1>Word count: {wordCount}</h1>
     </div>
   );
 }
