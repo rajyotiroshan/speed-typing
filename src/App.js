@@ -4,6 +4,7 @@ function App(props) {
   const [text, setText] = useState("Hi there! start typing in the box");
   const [wc, setWC] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(5);
+  const [timeStart, setTimeStart] = useState(false)
 
   const updateText = (evt) => {
     setText(evt.target.value);
@@ -18,19 +19,22 @@ function App(props) {
   };
 
   useEffect(() => {
-    if (timeRemaining > 0) {
+    if (timeRemaining > 0 && timeStart) {
       setTimeout(() => {
         setTimeRemaining((time) => time - 1);
       }, 1000);
     }
-  }, [timeRemaining]);
+  }, [timeRemaining, timeStart]);
 
+  const toggleTimeStart = ()=>{
+    setTimeStart(!timeStart)
+  }
   return (
     <>
       <h1>Speed Typing Game</h1>
       <h4>Time Remaining:: {timeRemaining}</h4>
       <textarea value={text} onChange={updateText} />
-      <button>Start</button>
+      <button onClick={toggleTimeStart}>Start</button>
       <h1>Word count:: {wc} </h1>
     </>
   );
