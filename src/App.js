@@ -1,16 +1,15 @@
 import React from "react";
 
 function App(props) {
-const text = "Hi there! start typing in the box";
   return (
-    <>
-      <h1>Speed Typing Game</h1>
-      <h4>4:00</h4>
-      <textarea value={text}/>
+    <div>
+      <h1>Speed Typing Game: How fastdo you type?</h1>
+      {/**react normalizes the text area as input tag so self cosing tag */}
+      <textarea />
       <button>Start</button>
-      <h1>20</h1>
-    </>
-  )
+      <h1>Word count ??</h1>
+    </div>
+  );
 }
 
 export default App;
