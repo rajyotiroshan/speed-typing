@@ -15,11 +15,17 @@ function App(props) {
     return filteredWord.length;
   }
 
-  useEffect(()=>{
-    setTimeout(() => {
-      setTimeRemaining(time=> time-1)
+  useEffect(() => {
+    /*    const id = setTimeout(() => {
+      setTimeRemaining((time) => time - 1);
     }, 1000);
-  }, [timeRemaining])
+    if (timeRemaining == 0) clearTimeout(id); */
+    if (timeRemaining > 0) {
+      setTimeout(() => {
+        setTimeRemaining((time) => time - 1);
+      }, 1000);
+    }
+  }, [timeRemaining]);
 
   return (
     <div>
