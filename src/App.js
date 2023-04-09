@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function App(props) {
   const STARTING_TIME = 8;
@@ -6,6 +6,7 @@ function App(props) {
   const [timeRemaining, setTimeRemaining] = useState(STARTING_TIME);
   const [isTimeRunning, setIsTimeRunning] = useState(false);
   const [wordCount, setWordCount] = useState(0);
+  const taRef = useRef(null);
 
   function handleChange(e) {
     const { value } = e.target;
@@ -23,6 +24,8 @@ function App(props) {
     setTimeRemaining(STARTING_TIME);
     setText("");
     setWordCount(0);
+    taRef.current.disabled = false;
+    taRef.current.focus();
   }
 
   function endGame() {
@@ -49,6 +52,7 @@ function App(props) {
       <h1>Speed Typing Game: How fastdo you type?</h1>
       {/**react normalizes the text area as input tag so self cosing tag */}
       <textarea
+        ref={taRef}
         onChange={handleChange}
         value={text}
         disabled={!isTimeRunning}
